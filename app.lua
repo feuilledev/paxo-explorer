@@ -25,10 +25,8 @@ function back()
 end
 function run(arg)
     print("[EXPLORER] : Loaded !")
-
-
     win=gui:window()
-    local title=gui:label(win, 0, 0, 144, 28)
+    local title=gui:label(win, 0, 0, 1400, 2000)
 
     local back_button = gui:box(win, 250, 410, 40, 40)
     back_button:setMainColor(COLOR_DARK)
@@ -39,7 +37,7 @@ function run(arg)
     
 
 
-    title:setFontSize(14)
+    title:setFontSize(25)
     title:setText("[FeuilleDev - File Explorer]")
     ShowFiles(ROOT_FOLDER)
 
