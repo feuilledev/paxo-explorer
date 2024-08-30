@@ -1,5 +1,5 @@
 
-ROOT_FOLDER = "/" -- debug only
+ROOT_FOLDER = "../" -- debug only
 ATMP = "/"
 function ShowFiles(path)
     local list = gui:vlist(win, 35, 90, 250, 280)
@@ -41,7 +41,7 @@ function run(arg)
 
     title:setFontSize(14)
     title:setText("[FeuilleDev - File Explorer]")
-    ShowFiles("assets")
+    ShowFiles(ROOT_FOLDER)
 
     
 
