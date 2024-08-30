@@ -39,17 +39,10 @@ function run(arg)
     
 
 
-    title:setFontSize(10)
-    title:setText("[File Explorer] (by eletrixtime)")
+    title:setFontSize(14)
+    title:setText("[FeuilleDev - File Explorer]")
     ShowFiles("assets")
---    local info_icon = gui:box(win, 250, 410, 40, 40)
---    info_icon:setMainColor(COLOR_DARK)
---    info_icon:setRadius(20)
---    local info_icon_ic = gui:image(info_icon, "assets/info.png", 14, 14, 12, 12, COLOR_DARK)
---    info_icon:onClick(function ()
---        print("Infooo")
---    end)
-    
+
     
 
     gui:setWindow(win)
