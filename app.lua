@@ -14,30 +14,67 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 ATMP = "../"
 function LoadFiles(path)
     if path:sub(-4) == ".png" then
-        print("PNG")
         win_img = gui:window()
+        local e=gui:label(win_img, 90, 0, 120, 120)
+        e:setFontSize(10)
+        e:setText(path)
+
+        imgParametre = gui:image(win_img, path, 100, 100, 25, 25)
+        --TODO : Back Button
+ 
         gui:setWindow(win_img)
+    elseif path:sub(-4) == ".txt" then
+        win_txt = gui:window()
+        local e=gui:label(win_txt, 90, 0, 320, 320)
+        e:setFontSize(15)
+        e:setText(path)
+
+        local text_ = gui:label(win_txt, 0, 40, 320, 320)
+        text_:setFontSize(15)
+        local file_temp = storage:file(path, READ)
+        file_temp:open()
+        file_temp_text_ = file_temp:readAll()
+        file_temp:close()
+        text_:setText(file_temp_text_)
+
+        _back_button = gui:box(win_txt, 250, 410, 40, 40)
+       -- _back_button:setMainColor(COLOR_DARK)
+        _back_button:setRadius(20)
+        _back_icon = gui:image(_back_button, "assets/app_assets/back.png", 14, 14, 12, 12)
+        _back_button:onClick(function() 
+            time:setTimeout(function () gui:del(win_txt) gui:setWindow(win) end, 0) end)
+
+        gui:setWindow(win_txt)
     end
 end
 function ShowFiles(path)
-    local list = gui:vlist(win, 35, 90, 250, 280)
-    list:clear()
+    if(list~=nil) then
+      list:clear()
+    else
+      list = gui:vlist(win, 35, 90, 250, 280)
+    end
     local files = storage:listDir(path)
     for i, file in ipairs(files) do
+        print("Creating case")
         local case = gui:box(list, 0, (i-1)*36, 250, 36)
         local nameLabel = gui:label(case, 21, 0, 230, 18)
         nameLabel:setText(file)
         nameLabel:setFontSize(16)
         case:onClick(function()
-            if storage:isDir(path .. "/" .. file) then
-                print("DIRECTORY")
-                print(path .. "/" .. file)
-                ShowFiles(path .. "/" .. file)
-                ATMP = path
-            else
-                print("FILE")
-                LoadFiles(path .. "/" .. file)
-            end
+            time:setTimeout(
+              function ()
+                  if storage:isDir(path .. "/" .. file) then
+                  print("DIRECTORY")
+                  print(path .. "/" .. file)
+                  ShowFiles(path .. "/" .. file)
+                  ATMP = path
+              else
+                  print("FILE")
+                  print(path .. "/" .. file)
+                  print(file)
+                  LoadFiles(path .. "/" .. file)
+              end
+            end, 0)
         end)
     end
 end
@@ -49,7 +86,7 @@ end
 function run(arg)
     print("[EXPLORER] : Loaded !")
     win=gui:window()
-    local title=gui:label(win, 0, 0, 1400, 2000)
+    local title=gui:label(win, 0, 0, 300, 300)
 
     local back_button = gui:box(win, 250, 410, 40, 40)
     --back_button:setMainColor(COLOR_DARK)
